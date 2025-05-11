@@ -1,6 +1,7 @@
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
+import { ItemView } from './components/Items/ItemView';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -23,6 +24,8 @@ import Pokedex from './components/Pokedex';
 import './theme/variables.css';
 import { MenuPokedexProvider } from './contexts/MenuPokedexProvider';
 import { PokedexMenu } from './components/Menu/PokedexMenu';
+import { PokedexDataProvider } from './contexts/PokedexDataProvider';
+import { PokemonView } from './components/Pokemon/PokemonView';
 
 setupIonicReact();
 
@@ -31,22 +34,24 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
         <MenuPokedexProvider>
-          <Pokedex>
-            <Route exact path="/home">
-              <PokedexMenu />
-            </Route>
-            <Route exact path="/pokedex">
-              <>Esta es la Pokedex</>
-            </Route>
-            <Route exact path="/pack">
-              <>Esta es la bolsa de objetos</>
-            </Route>
-            <Route exact path="/exit">
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-          </Pokedex>
+          <PokedexDataProvider>
+            <Pokedex>
+              <Route exact path="/home">
+                <PokedexMenu />
+              </Route>
+              <Route exact path="/pokedex">
+                <PokemonView />
+              </Route>
+              <Route exact path="/pack">
+                <ItemView />
+              </Route>
+              <Route exact path="/exit">
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+            </Pokedex>
+          </PokedexDataProvider>
         </MenuPokedexProvider>
       </IonRouterOutlet>
     </IonReactRouter>
